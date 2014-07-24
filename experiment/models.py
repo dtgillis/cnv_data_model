@@ -32,7 +32,7 @@ class PoolManager(models.Manager):
         return pool
 
 
-class Pool(models.Model):
+class SampleGroup(models.Model):
 
     sample = models.ForeignKey(Sample)
     pool_name = models.CharField(max_length=100)
@@ -76,19 +76,19 @@ class Chromosome(models.Model):
         return self.chromosome_name
 
 
-class IntervalManager(models.Manager):
+class GenomeIntervalManager(models.Manager):
 
     def create_interval(self, chromosome, start, end):
         interval = self.create(chromosome=chromosome, start=start, end=end)
         return interval
 
 
-class Interval(models.Model):
+class GenomeInterval(models.Model):
 
     chromosome = models.ForeignKey(Chromosome)
     start = models.PositiveIntegerField()
     end = models.PositiveIntegerField()
-    objects = IntervalManager()
+    objects = GenomeIntervalManager()
 
     class Meta:
         unique_together = ('chromosome', 'start', 'end')

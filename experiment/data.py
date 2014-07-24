@@ -31,7 +31,7 @@ def create_interval_record(interval_line, chrm_obj):
         chrm_obj = exp.Chromosome.objects.filter(chromosome_name=chrm_name).get()
     start = int(fields[1].split("-")[0])
     end = int(fields[1].split("-")[1])
-    interval = exp.Interval(chromosome=chrm_obj, start=start, end=end)
+    interval = exp.GenomeInterval(chromosome=chrm_obj, start=start, end=end)
     return interval, chrm_obj
 
 
@@ -66,7 +66,7 @@ def build_data(base_dir):
             interval, chrm_obj = create_interval_record(line, chrm_obj)
             interval_list.append(interval)
 
-    exp.Interval.objects.bulk_create(interval_list)
+    exp.GenomeInterval.objects.bulk_create(interval_list)
 
 
 
