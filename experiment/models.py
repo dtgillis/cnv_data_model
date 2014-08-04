@@ -25,7 +25,7 @@ class Sample(models.Model):
             return self.sample_name + '-xt2'
 
 
-class PoolManager(models.Manager):
+class SampleGroupManager(models.Manager):
 
     def create_pool(self, sample, pool_name):
         pool = self.create(sample=sample, pool_name=pool_name)
@@ -35,11 +35,11 @@ class PoolManager(models.Manager):
 class SampleGroup(models.Model):
 
     sample = models.ForeignKey(Sample)
-    pool_name = models.CharField(max_length=100)
-    objects = PoolManager()
+    group_name = models.CharField(max_length=100)
+    objects = SampleGroupManager()
 
     def __unicode__(self):
-        return self.pool_name
+        return self.group_name
 
 
 class SoftwareManager(models.Manager):

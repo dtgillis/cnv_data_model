@@ -69,11 +69,32 @@ def build_data(base_dir):
     exp.GenomeInterval.objects.bulk_create(interval_list)
 
 
+def build_sample_group_list(dir):
 
+    sample_group_list_dir = dir + os.sep + 'sample_group'
+    group_list = []
+    for sample_group_list in ['bam_list_a', 'bam_list_b', 'bam_list_c']:
+        for line in open(sample_group_list_dir + os.sep + sample_group_list, 'r'):
+            bam_file_name = line.split(os.sep)[-1].strip(os.linesep)
+            sample = exp.Sample.objects.all().filter(bam_file=bam_file_name).get()
+            sample_group = exp.SampleGroup(sample_name=sample.sample_name, group_name=sample_group_list)
+            group_list.append(sample_group)
 
+    exp.SampleGroup.objects.bulk_create(group_list)
 
+def build_software_data():
 
+    software_names = ['exome_depth', ]
+
+    software_list = []
+    for software_name in software_names:
+
+        software_list.append(exp.Software(software_name=software_name, extra_params='non-normal input'))
+
+    exp.Software.objects.bulk_create(software_list)
 
 
 if __name__ == '__main__':
-    build_data('/home/dtgillis/sim_capture/django_data')
+    #build_data('/home/dtgillis/sim_capture/django_data')
+    #build_sample_group_list('/home/dtgillis/sim_capture/django_data')
+    build_software_data()

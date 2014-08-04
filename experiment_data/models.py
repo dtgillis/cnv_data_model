@@ -29,10 +29,15 @@ class CNVSoftwareCallManager(models.Manager):
 
 class CNVSoftwareCall(models.Model):
 
+    software = models.ForeignKey(exp.Software)
     sample_group = models.ForeignKey(exp.SampleGroup)
     chromosome = models.ForeignKey(exp.Chromosome)
     start = models.IntegerField()
     end = models.IntegerField()
     cn_state = models.IntegerField()
+    num_exons = models.IntegerField()
+    bayes_factor = models.FloatField()
+
+
 
 
